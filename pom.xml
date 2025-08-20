@@ -9,8 +9,7 @@
   <name>Simulador Enigma</name>
   <description>Simulador Enigma para a SICE 2025 </description>
   
-  <packaging>war</packaging>
-  
+
   <properties>
     <java.version>17</java.version>
     <spring-boot.version>3.3.2</spring-boot.version>

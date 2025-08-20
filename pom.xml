@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.example</groupId>
   <artifactId>simuladorenigma</artifactId>
-  <version>0.6</version>
+  <version>0.7</version>
   <name>Simulador Enigma</name>
   <description>Simulador Enigma para a SICE 2025 </description>
   
@@ -37,7 +37,9 @@
       <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
   </dependencies>
-	  <packaging>jar</packaging>
+  
+<packaging>war</packaging>
+
   <build>
 	<plugins>
       <plugin>

@@ -1,21 +1,27 @@
-# Use OpenJDK como base
-FROM openjdk:17
+# Etapa 1: Build com Maven + JDK 17
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 
-# Diretório de trabalho
 WORKDIR /app
 
-# Copia arquivos Maven
+# Copia pom.xml e baixa dependências
 COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# Copia código fonte e compila
 COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Instala Maven
-RUN apt-get update && apt-get install -y maven
+# Etapa 2: Usar Tomcat para rodar o WAR
+FROM tomcat:9.0-jdk17
 
-# Build da aplicação
-RUN mvn clean package
+# Remove os apps padrão do Tomcat (opcional, para evitar o ROOT default)
+RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Expõe a porta do seu app
+# Copia o WAR gerado para o Tomcat
+COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
+
+# Expor porta padrão do Tomcat
 EXPOSE 8080
 
-# Comando para rodar o WAR
-CMD ["java", "-jar", "target/enigma-simulator-1.0.0.war"]
+# Comando padrão do Tomcat
+CMD ["catalina.sh", "run"]

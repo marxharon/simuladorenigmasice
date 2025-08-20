@@ -18,7 +18,7 @@ FROM tomcat:9.0-jdk17
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copia o WAR gerado para o Tomcat
-COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
+COPY --from=build /target/*.war /usr/local/tomcat/webapps/ROOT.war
 
 # Expor porta padrão do Tomcat
 EXPOSE 8080
